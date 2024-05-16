@@ -1,4 +1,10 @@
 <header>
-  <h1 class="header">{{ title | uppercase }}</h1>
+  <mat-toolbar class="header">
+    <h1 class="header">
+      <span>{{ title | uppercase }}</span>
+    </h1>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
 </header>
+
 <router-outlet></router-outlet>

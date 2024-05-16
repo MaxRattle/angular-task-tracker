@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TasksListComponent } from './components/tasks-list/tasks-list.component';
-import { TasksComponent } from './components/tasks/tasks.component';
 import { UpperCasePipe } from '@angular/common';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UpperCasePipe],
+  imports: [RouterOutlet, UpperCasePipe, MatToolbarModule, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

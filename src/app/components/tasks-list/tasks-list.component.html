@@ -1,84 +1,31 @@
 <section class="list">
   <h2>{{ title | uppercase }}</h2>
   <div class="buttons">
-    <button mat-raised-button color="primary">Добавить</button>
-    <mat-form-field>
-      <mat-label>Фильтр</mat-label>
-      <mat-select>
-        @for ( statuse of statuses; track statuses) {
-        <mat-option [value]="statuses">{{ statuses }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      Добавить
+    </button>
   </div>
+
   <div class="table">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      (matSortChange)="announceSortChange($event)"
-      class="mat-elevation-z8"
-    >
-      <!-- Title Column -->
-      <ng-container matColumnDef="title">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by name"
-        >
-          Title
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.title }}</td>
-      </ng-container>
-
-      <!-- Worker Column -->
-      <ng-container matColumnDef="worker">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by number"
-        >
-          Worker
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.worker }}</td>
-      </ng-container>
-
-      <!-- Deadline Column -->
-      <ng-container matColumnDef="deadline">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by number"
-        >
-          Deadline
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.deadline }}</td>
-      </ng-container>
-
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-      </ng-container>
-
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by number"
-        >
-          ID
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <table class="iksweb">
+      <tbody>
+        <tr>
+          <td>Название</td>
+          <td>Работник</td>
+          <td>Дедлайн</td>
+          <td>Статус</td>
+          <td>Приоритет</td>
+        </tr>
+        @for (property of testTask; track $index) {
+        <tr>
+          <td>{{ property.title }}</td>
+          <td>{{ property.worker }}</td>
+          <td>{{ property.deadline }}</td>
+          <td>{{ property.status }}</td>
+          <td>{{ property.priority }}</td>
+        </tr>
+        }
+      </tbody>
     </table>
   </div>
 </section>
