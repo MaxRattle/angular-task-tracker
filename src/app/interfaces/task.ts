@@ -8,4 +8,5 @@ export interface Task {
   deadline: Date;
   status: Status;
   priority: Priority;
+  id: number;
 }

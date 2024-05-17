@@ -30,6 +30,7 @@
               mat-fab
               color="warn"
               aria-label="Example icon button with a delete icon"
+              (click)="removeTask(property.id)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -39,6 +40,7 @@
               mat-fab
               color="basic"
               aria-label="Example icon button with a vertical three dot icon"
+              (click)="editTask()"
             >
               <mat-icon>more_vert</mat-icon>
             </button>

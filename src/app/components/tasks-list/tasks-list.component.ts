@@ -35,7 +35,16 @@ export class TasksListComponent {
   tasks: Task[] = this.taskService.getTasks();
 
   // открытия диалогового окна
-  openDialog() {
+  openDialog(): void {
     this._dialog.open(DialogComponent);
   }
+
+  // удаление задачи
+  removeTask(taskId: number): void {
+    this.taskService.removeTask(taskId);
+    this.tasks = this.taskService.getTasks();
+  }
+
+  // редактирование задачи
+  editTask() {}
 }
