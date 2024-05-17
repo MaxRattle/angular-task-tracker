@@ -27,11 +27,11 @@ import { TasksService } from '../../services/tasks.service';
     MatSelectModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss',
+  templateUrl: './task-create-dialog.component.html',
+  styleUrl: './task-create-dialog.component.scss',
   providers: [provideNativeDateAdapter()],
 })
-export class DialogComponent {
+export class TaskCreateDialogComponent {
   priorities = Object.values(Priority);
   statuses = Object.values(Status);
 

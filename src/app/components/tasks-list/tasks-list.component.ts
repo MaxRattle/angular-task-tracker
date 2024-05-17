@@ -6,7 +6,7 @@ import { TasksService } from '../../services/tasks.service';
 import { UpperCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 
-import { DialogComponent } from '../dialog/dialog.component';
+import { TaskCreateDialogComponent } from '../task-create-dialog/task-create-dialog.component';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     UpperCasePipe,
     DatePipe,
     MatDialogModule,
-    DialogComponent,
+    TaskCreateDialogComponent,
     MatButtonModule,
     MatIconModule,
   ],
@@ -29,14 +29,17 @@ import { MatIconModule } from '@angular/material/icon';
 export class TasksListComponent {
   title: string = 'Список задач';
 
-  constructor(private taskService: TasksService, private _dialog: MatDialog) {}
+  constructor(
+    private taskService: TasksService,
+    private _openCreateTaskDialog: MatDialog
+  ) {}
 
   // получения данных о задачах
   tasks: Task[] = this.taskService.getTasks();
 
   // открытия диалогового окна
-  openDialog(): void {
-    this._dialog.open(DialogComponent);
+  openCreateTaskDialog(): void {
+    this._openCreateTaskDialog.open(TaskCreateDialogComponent);
   }
 
   // удаление задачи
@@ -46,5 +49,5 @@ export class TasksListComponent {
   }
 
   // редактирование задачи
-  editTask() {}
+  openEditTaskDialog() {}
 }
