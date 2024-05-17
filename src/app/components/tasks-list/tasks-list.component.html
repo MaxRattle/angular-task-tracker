@@ -17,7 +17,7 @@
           <td>Статус</td>
           <td>Приоритет</td>
         </tr>
-        @for (property of testTask; track $index) {
+        @for (property of tasks; track $index) {
         <tr>
           <td>{{ property.header }}</td>
           <td>{{ property.title }}</td>
@@ -25,6 +25,24 @@
           <td>{{ property.deadline }}</td>
           <td>{{ property.status }}</td>
           <td>{{ property.priority }}</td>
+          <td>
+            <button
+              mat-fab
+              color="warn"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+          <td>
+            <button
+              mat-fab
+              color="basic"
+              aria-label="Example icon button with a vertical three dot icon"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </td>
         </tr>
         }
       </tbody>

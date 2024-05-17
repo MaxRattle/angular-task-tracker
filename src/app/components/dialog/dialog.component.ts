@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+
 import { Priority } from '../../enums/priority';
 import { Status } from '../../enums/status';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+import { TasksService } from '../../services/tasks.service';
+
 @Component({
   selector: 'app-dialog',
   standalone: true,
@@ -31,7 +37,7 @@ export class DialogComponent {
 
   // формы
   formDialog: FormGroup;
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private taskService: TasksService) {
     this.formDialog = this._fb.group({
       header: '',
       title: '',
@@ -41,16 +47,10 @@ export class DialogComponent {
       priority: '',
     });
   }
+  // отправка формы
   onFormSubmit() {
     if (this.formDialog.valid) {
-      console.log(this.formDialog.value);
+      this.taskService.addTask(this.formDialog.value);
     }
   }
-
-  // закрыть dialog
-  // constructor(private _dialog: MatDialog) {}
-
-  // closeDialog() {
-  //   this._dialog.close();
-  // }
 }

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Task } from '../../interfaces/task';
-import { Priority } from '../../enums/priority';
-import { Status } from '../../enums/status';
+import { TasksService } from '../../services/tasks.service';
 
 import { UpperCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
@@ -11,6 +10,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tasks-list',
@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     DialogComponent,
     MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.scss',
@@ -28,29 +29,12 @@ import { MatButtonModule } from '@angular/material/button';
 export class TasksListComponent {
   title: string = 'Список задач';
 
-  testTask: Task[] = [
-    {
-      header: 'Заголовок первой задачи',
-      title: 'Пример',
-      worker: 'Андрей',
-      deadline: new Date(),
-      status: Status.New,
-      priority: Priority.Middle,
-    },
-    {
-      header: 'Заголовок второй задачи',
-      title: 'Пример номер 2',
-      worker: 'Максим',
-      deadline: new Date(1),
-      status: Status.InProgress,
-      priority: Priority.High,
-    },
-  ];
+  constructor(private taskService: TasksService, private _dialog: MatDialog) {}
 
-  // добавление задачи
-  // открыть dialog
-  constructor(private _dialog: MatDialog) {}
+  // получения данных о задачах
+  tasks: Task[] = this.taskService.getTasks();
 
+  // открытия диалогового окна
   openDialog() {
     this._dialog.open(DialogComponent);
   }
