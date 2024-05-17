@@ -14,10 +14,9 @@
 }
 
 .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-content: space-between;
+  padding: 0px 25px 0px;
   button {
-    width: 48%;
+    flex: 1;
   }
 }

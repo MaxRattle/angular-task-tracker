@@ -10,6 +10,7 @@
     <table class="iksweb">
       <tbody>
         <tr>
+          <td>Заголовок</td>
           <td>Название</td>
           <td>Работник</td>
           <td>Дедлайн</td>
@@ -18,6 +19,7 @@
         </tr>
         @for (property of testTask; track $index) {
         <tr>
+          <td>{{ property.header }}</td>
           <td>{{ property.title }}</td>
           <td>{{ property.worker }}</td>
           <td>{{ property.deadline }}</td>

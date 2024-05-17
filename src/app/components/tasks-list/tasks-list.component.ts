@@ -30,6 +30,7 @@ export class TasksListComponent {
 
   testTask: Task[] = [
     {
+      header: 'Заголовок первой задачи',
       title: 'Пример',
       worker: 'Андрей',
       deadline: new Date(),
@@ -37,6 +38,7 @@ export class TasksListComponent {
       priority: Priority.Middle,
     },
     {
+      header: 'Заголовок второй задачи',
       title: 'Пример номер 2',
       worker: 'Максим',
       deadline: new Date(1),
@@ -46,6 +48,7 @@ export class TasksListComponent {
   ];
 
   // добавление задачи
+  // открыть dialog
   constructor(private _dialog: MatDialog) {}
 
   openDialog() {
