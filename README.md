@@ -1,5 +1,9 @@
 # AngularMiniTaskTracker
 
+## Тестовое задание Angular мини-тасктреккер по типу Asana
+
+[Деплой](https://angular-test-task-mini-task-tracker.netlify.app/)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
 
 ## Development server
