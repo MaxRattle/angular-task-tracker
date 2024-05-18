@@ -7,6 +7,9 @@ import { Status } from '../enums/status';
   providedIn: 'root',
 })
 export class TasksService {
+  priorities = Object.values(Priority);
+  statuses = Object.values(Status);
+
   private tasks!: Task[];
   constructor() {
     this.loadTasks();
@@ -67,6 +70,7 @@ export class TasksService {
   getTasks(): Task[] {
     return this.tasks;
   }
+
   addTask(task: Task): void {
     const newTaskWithId = {
       ...task,
@@ -75,10 +79,12 @@ export class TasksService {
     this.tasks.push(newTaskWithId);
     this.saveTasks();
   }
+
   removeTask(taskId: number): void {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     this.saveTasks();
   }
+
   private saveTasks(): void {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }

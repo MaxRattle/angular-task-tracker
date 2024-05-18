@@ -8,9 +8,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
-import { Priority } from '../../enums/priority';
-import { Status } from '../../enums/status';
-
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { TasksService } from '../../services/tasks.service';
@@ -32,8 +29,8 @@ import { TasksService } from '../../services/tasks.service';
   providers: [provideNativeDateAdapter()],
 })
 export class TaskCreateDialogComponent {
-  priorities = Object.values(Priority);
-  statuses = Object.values(Status);
+  priorities = this.taskService.priorities;
+  statuses = this.taskService.statuses;
 
   // формы
   formDialog: FormGroup;
