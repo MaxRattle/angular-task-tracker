@@ -6,10 +6,16 @@ import { TasksService } from '../../services/tasks.service';
 import { OnInit } from '@angular/core';
 
 import { DatePipe } from '@angular/common';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, MatButtonModule, MatIconModule, RouterLink],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
 })

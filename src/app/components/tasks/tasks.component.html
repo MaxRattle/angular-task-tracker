@@ -1,4 +1,11 @@
 <section>
+  <button
+    mat-fab
+    color="warn"
+    aria-label="Example icon button with a home icon"
+  >
+    <a [routerLink]="['/']"><mat-icon>home</mat-icon></a>
+  </button>
   <h1>{{ task.header }}</h1>
   <h2>{{ task.title }}</h2>
   <div>

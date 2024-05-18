@@ -54,6 +54,7 @@ export class TaskCreateDialogComponent {
       status: [data?.status, Validators.required],
       priority: [data?.priority, Validators.required],
       id: [data?.id],
+      description: [data?.description, Validators.required],
     });
   }
   // отправка формы
