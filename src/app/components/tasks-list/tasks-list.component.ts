@@ -22,6 +22,7 @@ import { ViewChild, AfterViewInit } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
@@ -40,6 +41,8 @@ import { Subscription } from 'rxjs';
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
+
+    RouterLink,
   ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.scss',

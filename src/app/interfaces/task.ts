@@ -9,4 +9,5 @@ export interface Task {
   status: Status;
   priority: Priority;
   id: number;
+  description: string;
 }

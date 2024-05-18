@@ -1,1 +1,11 @@
-<p>здесб юудет страница описания задачи</p>
+<section>
+  <h1>{{ task.header }}</h1>
+  <h2>{{ task.title }}</h2>
+  <div>
+    <p>{{ task.worker }}</p>
+    <p>{{ task.deadline | date }}</p>
+    <p>{{ task.status }}</p>
+    <p>{{ task.priority }}</p>
+    <p>{{ task.description }}</p>
+  </div>
+</section>
