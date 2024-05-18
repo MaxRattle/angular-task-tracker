@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Task } from '../interfaces/task';
 import { Priority } from '../enums/priority';
 import { Status } from '../enums/status';
+
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -10,7 +12,9 @@ export class TasksService {
   priorities = Object.values(Priority);
   statuses = Object.values(Status);
 
-  private tasks!: Task[];
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  private tasks: Task[] = [];
+
   constructor() {
     this.loadTasks();
   }
@@ -20,63 +24,29 @@ export class TasksService {
     if (tasksFromStorage) {
       this.tasks = JSON.parse(tasksFromStorage);
     } else {
-      this.tasks = [];
-      // данные о задачах по умолчанию
-      const defaultTasks = [
+      this.tasks = [
         {
-          header: 'Заголовок первой задачи',
-          title: 'Пример',
-          worker: 'Андрей',
-          deadline: new Date(),
+          header: 'Разработка',
+          title: 'Мини таск трекер',
+          worker: 'Максим Сушков',
+          deadline: new Date(2024, 4, 18),
           status: Status.New,
-          priority: Priority.Middle,
-          id: this.generateUniqueId(),
-        },
-        {
-          header: 'Заголовок второй задачи',
-          title: 'Пример номер 2',
-          worker: 'Максим',
-          deadline: new Date(1),
-          status: Status.InProgress,
           priority: Priority.High,
           id: this.generateUniqueId(),
         },
       ];
-      // generateUniqueId для каждой задачи при начальной загрузке и добавляем их в this.tasks
-      for (const task of defaultTasks) {
-        const taskWithId = {
-          ...task,
-          id: this.generateUniqueId(),
-        };
-        this.tasks.push(taskWithId);
-      }
-      // сохранение задач в localStorage
       this.saveTasks();
     }
+    this.tasksSubject.next(this.tasks);
   }
 
-  // генерация ID для задач
-  private generateUniqueId(): number {
-    let uniqueId: number;
-    let isUnique: boolean;
-    do {
-      uniqueId = Date.now() + Math.floor(Math.random() * 1000);
-      isUnique = !this.tasks.some((task) => task.id === uniqueId);
-    } while (!isUnique);
-    return uniqueId;
-  }
-
-  // управление данными о задачах
-  getTasks(): Task[] {
-    return this.tasks;
+  get tasks$() {
+    return this.tasksSubject.asObservable();
   }
 
   addTask(task: Task): void {
-    const newTaskWithId = {
-      ...task,
-      id: this.generateUniqueId(), // генерация и добавление уникального ID
-    };
-    this.tasks.push(newTaskWithId);
+    task.id = this.generateUniqueId(); // Генерация ID для новой задачи
+    this.tasks.push(task);
     this.saveTasks();
   }
 
@@ -85,7 +55,24 @@ export class TasksService {
     this.saveTasks();
   }
 
+  updateTask(task: Task): void {
+    const index = this.tasks.findIndex((t) => t.id === task.id);
+    if (index > -1) {
+      this.tasks[index] = task;
+      this.saveTasks();
+    }
+  }
+
   private saveTasks(): void {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    this.tasksSubject.next(this.tasks); // Обновление потока после каждого изменения
+  }
+
+  private generateUniqueId(): number {
+    let uniqueId: number;
+    do {
+      uniqueId = Date.now() + Math.floor(Math.random() * 1000);
+    } while (this.tasks.some((task) => task.id === uniqueId));
+    return uniqueId;
   }
 }

@@ -12,6 +12,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { TasksService } from '../../services/tasks.service';
 
+import { MatDialogRef } from '@angular/material/dialog';
+import { Inject, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Task } from '../../interfaces/task';
+import { Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-dialog',
   standalone: true,
@@ -34,20 +40,31 @@ export class TaskCreateDialogComponent {
 
   // формы
   formDialog: FormGroup;
-  constructor(private _fb: FormBuilder, private taskService: TasksService) {
-    this.formDialog = this._fb.group({
-      header: '',
-      title: '',
-      worker: '',
-      deadline: '',
-      status: '',
-      priority: '',
+  constructor(
+    private formBuilder: FormBuilder,
+    private taskService: TasksService,
+    private dialogRef: MatDialogRef<TaskCreateDialogComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Task
+  ) {
+    this.formDialog = this.formBuilder.group({
+      header: [data?.header, Validators.required],
+      title: [data?.title, Validators.required],
+      worker: [data?.worker, Validators.required],
+      deadline: [data?.deadline, Validators.required],
+      status: [data?.status, Validators.required],
+      priority: [data?.priority, Validators.required],
+      id: [data?.id],
     });
   }
   // отправка формы
   onFormSubmit() {
     if (this.formDialog.valid) {
-      this.taskService.addTask(this.formDialog.value);
+      if (this.data) {
+        this.taskService.updateTask(this.formDialog.value);
+      } else {
+        this.taskService.addTask(this.formDialog.value);
+      }
+      this.dialogRef.close();
     }
   }
 }

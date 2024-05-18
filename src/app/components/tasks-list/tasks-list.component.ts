@@ -19,7 +19,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ViewChild, AfterViewInit } from '@angular/core';
 
-import { Table } from '../../interfaces/table';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
@@ -42,7 +44,7 @@ import { Table } from '../../interfaces/table';
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.scss',
 })
-export class TasksListComponent {
+export class TasksListComponent implements AfterViewInit, OnDestroy {
   title: string = 'Список задач';
 
   displayedColumns: string[] = [
@@ -52,26 +54,35 @@ export class TasksListComponent {
     'deadline',
     'status',
     'priority',
-    'id',
+    'action',
   ];
 
-  dataSource!: MatTableDataSource<Task>;
+  dataSource = new MatTableDataSource<Task>();
+  private subscriptions = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private taskService: TasksService,
-    private _openCreateTaskDialog: MatDialog
+    private openCreateTaskDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.tasks);
+    this.subscriptions.add(
+      this.taskService.tasks$.subscribe((tasks) => {
+        this.dataSource.data = tasks; // Инициализируем данные для таблицы
+      })
+    );
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -83,21 +94,20 @@ export class TasksListComponent {
     }
   }
 
-  // получения данных о задачах
-  tasks: Task[] = this.taskService.getTasks();
-
   // открытия диалогового окна
-  openCreateTaskDialog(): void {
-    this._openCreateTaskDialog.open(TaskCreateDialogComponent);
+  createTaskDialog(): void {
+    this.openCreateTaskDialog.open(TaskCreateDialogComponent);
   }
 
   // удаление задачи
   removeTask(taskId: number): void {
     this.taskService.removeTask(taskId);
-    this.tasks = this.taskService.getTasks();
-    this.dataSource = new MatTableDataSource(this.tasks);
   }
 
   // редактирование задачи
-  openEditTaskDialog() {}
+  editTaskDialog(task: Task): void {
+    this.openCreateTaskDialog.open(TaskCreateDialogComponent, {
+      data: task,
+    });
+  }
 }
